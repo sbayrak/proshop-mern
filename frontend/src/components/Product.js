@@ -7,6 +7,7 @@ import {
   CardActions,
   Grid,
   Typography,
+  Link,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,24 +27,29 @@ const Product = ({ product }) => {
     <Fragment>
       <Grid item xs={12} sm={6} md={3} className={classes.gridProduct}>
         <Card>
-          <CardActionArea>
-            <CardMedia
-              component='img'
-              alt={product.name}
-              height='160'
-              image={product.image}
-              title={product.name}
-              style={{ objectFit: 'contain' }}
-            />
-            <CardContent className={classes.cardDesc}>
-              <Typography gutterBottom variant='h6' component='h3'>
-                {product.name}
-              </Typography>
-              <Typography variant='body2' color='textSecondary' component='p'>
-                {product.description}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+          <Link
+            href={`/product/${product._id}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <CardActionArea>
+              <CardMedia
+                component='img'
+                alt={product.name}
+                height='160'
+                image={product.image}
+                title={product.name}
+                style={{ objectFit: 'contain' }}
+              />
+              <CardContent className={classes.cardDesc}>
+                <Typography gutterBottom variant='h6' component='h3'>
+                  {product.name}
+                </Typography>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  {product.description}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Link>
           <CardActions>
             <Typography variant='body2'>
               {product.rating} out of {product.numReviews}
