@@ -3,6 +3,7 @@ import { Container } from '@material-ui/core';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Fragment } from 'react';
+import HomeScreen from './screens/HomeScreen';
 
 const App = () => {
   return (
@@ -10,9 +11,7 @@ const App = () => {
       <div className='App'>
         <Header></Header>
         <main>
-          <Container maxWidth='lg'>
-            <h1>app</h1>
-          </Container>
+          <HomeScreen></HomeScreen>
         </main>
         <Footer></Footer>
       </div>
