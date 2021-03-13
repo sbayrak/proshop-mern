@@ -1,3 +1,6 @@
+* {
+  scroll-behavior: smooth;
+}
 .App {
   text-align: center;
 }
@@ -35,4 +38,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.makeStyles-list-9 {
+  left: -100%;
 }
