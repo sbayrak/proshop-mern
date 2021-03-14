@@ -15,9 +15,10 @@ const useStyles = makeStyles((theme) => ({
   bottomGridContainer: {},
   productImg: {
     width: 600,
-    objectFit: 'contained',
+    objectFit: 'contain',
     height: 'auto',
     borderRadius: '5px',
+    boxShadow: theme.shadows[1],
     [theme.breakpoints.down('md')]: {
       width: 450,
     },
@@ -85,7 +86,7 @@ const ProductScreen = ({ match }) => {
           <Grid container item className={classes.bottomGridContainer}>
             <Grid item md={6}>
               <img
-                src='/images/airpods.jpg'
+                src={product.image}
                 alt='proshop_airpods'
                 className={classes.productImg}
               />
@@ -153,7 +154,7 @@ const ProductScreen = ({ match }) => {
                     Stock :
                   </Typography>
                   <Typography variant='subtitle1' gutterBottom>
-                    In Stock
+                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                   </Typography>
                 </Grid>
                 <Button
@@ -161,6 +162,7 @@ const ProductScreen = ({ match }) => {
                   fullWidth
                   disableElevation
                   className={classes.cartBtn}
+                  disabled={product.countInStock > 0 ? false : true}
                 >
                   ADD TO CART
                 </Button>
