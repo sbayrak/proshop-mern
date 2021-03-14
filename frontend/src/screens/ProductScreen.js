@@ -126,36 +126,30 @@ const ProductScreen = ({ match }) => {
               className={classes.bottomGridRightItem}
             >
               <Paper className={classes.cartPaper}>
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  direction='row'
-                  justify='space-between'
-                  className={classes.cartRow}
-                >
-                  <Typography variant='subtitle1' gutterBottom>
-                    Price :
-                  </Typography>
-                  <Typography variant='subtitle1' gutterBottom>
-                    ${product.price}
-                  </Typography>
+                <Grid container xs={12} className={classes.cartRow}>
+                  <Grid item xs={6}>
+                    <Typography variant='subtitle1' gutterBottom>
+                      Price :
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant='subtitle1' gutterBottom>
+                      ${product.price}
+                    </Typography>
+                  </Grid>
                 </Grid>
 
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  direction='row'
-                  justify='space-between'
-                  className={classes.cartRow}
-                >
-                  <Typography variant='subtitle1' gutterBottom>
-                    Stock :
-                  </Typography>
-                  <Typography variant='subtitle1' gutterBottom>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-                  </Typography>
+                <Grid container xs={12} className={classes.cartRow}>
+                  <Grid item xs={6}>
+                    <Typography variant='subtitle1' gutterBottom>
+                      Stock :
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant='subtitle1' gutterBottom>
+                      {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Button
                   variant='contained'
