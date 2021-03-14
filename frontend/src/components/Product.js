@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Rating from './Rating';
 import {
   Card,
   CardActionArea,
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   },
   cardDesc: {
     minHeight: 230,
+  },
+  bottomCardAction: {
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -50,11 +55,15 @@ const Product = ({ product }) => {
               </CardContent>
             </CardActionArea>
           </Link>
-          <CardActions>
-            <Typography variant='body2'>
-              {product.rating} out of {product.numReviews}
+          <CardActions className={classes.bottomCardAction}>
+            <Typography variant='body2' gutterBottom paragraph>
+              <Rating
+                value={product.rating}
+                color='#edbd00'
+                text={`${product.numReviews} reviews`}
+              ></Rating>
             </Typography>
-            <Typography variant='body2'> {product.price}</Typography>
+            <Typography variant='h6'> ${product.price}</Typography>
           </CardActions>
         </Card>
       </Grid>

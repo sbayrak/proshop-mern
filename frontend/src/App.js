@@ -1,21 +1,25 @@
 import './App.css';
-import { Container } from '@material-ui/core';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Fragment } from 'react';
 import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
 
 const App = () => {
   return (
-    <Fragment>
-      <div className='App'>
-        <Header></Header>
-        <main>
-          <HomeScreen></HomeScreen>
-        </main>
-        <Footer></Footer>
-      </div>
-    </Fragment>
+    <Router>
+      <Fragment>
+        <div className='App'>
+          <Header></Header>
+          <main>
+            <Route exact path='/' component={HomeScreen}></Route>
+            <Route exact path='/product/:id' component={ProductScreen}></Route>
+          </main>
+          <Footer></Footer>
+        </div>
+      </Fragment>
+    </Router>
   );
 };
 

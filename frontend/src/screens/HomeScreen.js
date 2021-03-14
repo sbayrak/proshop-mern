@@ -6,7 +6,7 @@ import Product from '../components/Product';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(15),
+    marginTop: theme.spacing(10),
   },
 }));
 

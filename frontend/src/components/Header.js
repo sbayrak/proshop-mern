@@ -156,7 +156,7 @@ const Header = () => {
     <Fragment>
       <CssBaseline></CssBaseline>
       <AppBar
-        position='fixed'
+        position='static'
         classes={classes.navbar}
         style={{ background: '#212121', top: '0' }}
       >
@@ -168,7 +168,7 @@ const Header = () => {
               </Avatar>
             </IconButton>
             <Typography variant='h6' className={classes.leftTypo}>
-              <a href='/home' rel='noreferrer' className={classes.leftTypo}>
+              <a href='/' rel='noreferrer' className={classes.leftTypo}>
                 ProShop
               </a>
             </Typography>
