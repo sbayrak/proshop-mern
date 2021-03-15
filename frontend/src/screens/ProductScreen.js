@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import products from '../products';
+import axios from 'axios';
 import Rating from '../components/Rating';
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,7 +63,18 @@ const useStyles = makeStyles((theme) => ({
 const ProductScreen = ({ match }) => {
   const classes = useStyles();
 
-  const product = products.find((product) => product._id === match.params.id);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await axios.get(`/api/product/${match.params.id}`);
+
+      setProduct(res.data);
+    };
+
+    fetchProduct();
+  }, []);
+
+  console.log(product);
 
   return (
     <Fragment>
@@ -83,7 +94,7 @@ const ProductScreen = ({ match }) => {
             </Link>
           </Grid>
 
-          <Grid container item className={classes.bottomGridContainer}>
+          <Grid container className={classes.bottomGridContainer}>
             <Grid item md={6}>
               <img
                 src={product.image}
@@ -118,13 +129,7 @@ const ProductScreen = ({ match }) => {
                 {product.description}
               </Typography>
             </Grid>
-            <Grid
-              item
-              md={3}
-              sm={6}
-              xs={12}
-              className={classes.bottomGridRightItem}
-            >
+            <Grid item md={3} xs={12} className={classes.bottomGridRightItem}>
               <Paper className={classes.cartPaper}>
                 <Grid container xs={12} className={classes.cartRow}>
                   <Grid item xs={6}>

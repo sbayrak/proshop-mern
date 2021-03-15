@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import products from '../products';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Product from '../components/Product';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,6 +12,17 @@ const useStyles = makeStyles((theme) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await axios.get('/api/products');
+
+      setProducts(res.data);
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <Fragment>
