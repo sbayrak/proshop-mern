@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ product }) => {
   const classes = useStyles();
+  console.log(product);
 
   return (
     <Fragment>

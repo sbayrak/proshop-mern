@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Rating from '@material-ui/lab/Rating';
+// import Rating from '@material-ui/lab/Rating';
+import Rating from '../components/Rating';
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -70,7 +71,7 @@ const ProductScreen = ({ match }) => {
   const [product, setProduct] = useState({});
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`/api/product/${match.params.id}`);
+      const res = await axios.get(`/api/products/${match.params.id}`);
 
       setProduct(res.data);
     };
@@ -78,8 +79,8 @@ const ProductScreen = ({ match }) => {
     fetchProduct();
   }, []);
 
-  console.log(product);
-
+  const { rating } = product;
+  console.log(rating);
   return (
     <Fragment>
       <Container maxWidth='lg' className={classes.productContainer}>
@@ -118,14 +119,18 @@ const ProductScreen = ({ match }) => {
                 gutterBottom
                 className={`${classes.bottomMidTypo2} ${classes.Typo1}`}
               >
-                <Rating
+                {/* <Rating
                   name='half-rating-read'
-                  defaultValue={product.rating}
+                  defaultValue={rating}
                   precision={0.5}
                   readOnly
                   size='small'
                 />
-                {product.numReviews} reviews
+                {product.numReviews} reviews */}
+                <Rating
+                  value={product.rating}
+                  text={`out of ${product.numReviews} reviews`}
+                ></Rating>
               </Typography>
               <Typography
                 variant='body1'

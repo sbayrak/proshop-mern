@@ -17,48 +17,72 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Rating = ({ value, text, color }) => {
+const Rating = ({ value, text }) => {
   const classes = useStyles();
   return (
     <Box component='div' className={classes.rating}>
       {value >= 1 ? (
-        <StarIcon style={{ color }}></StarIcon>
+        <StarIcon fontSize='small' style={{ color: '#ffb400' }}></StarIcon>
       ) : value >= 0.5 ? (
-        <StarHalfIcon></StarHalfIcon>
+        <StarHalfIcon fontSize='small'></StarHalfIcon>
       ) : (
-        <StarBorderIcon></StarBorderIcon>
+        <StarBorderIcon fontSize='small'></StarBorderIcon>
       )}
 
       {value >= 2 ? (
-        <StarIcon style={{ color }}></StarIcon>
+        <StarIcon fontSize='small' style={{ color: '#ffb400' }}></StarIcon>
       ) : value >= 1.5 ? (
-        <StarHalfIcon style={{ color }}></StarHalfIcon>
+        <StarHalfIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarHalfIcon>
       ) : (
-        <StarBorderIcon style={{ color }}></StarBorderIcon>
+        <StarBorderIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarBorderIcon>
       )}
 
       {value >= 3 ? (
-        <StarIcon style={{ color }}></StarIcon>
+        <StarIcon fontSize='small' style={{ color: '#ffb400' }}></StarIcon>
       ) : value >= 2.5 ? (
-        <StarHalfIcon style={{ color }}></StarHalfIcon>
+        <StarHalfIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarHalfIcon>
       ) : (
-        <StarBorderIcon style={{ color }}></StarBorderIcon>
+        <StarBorderIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarBorderIcon>
       )}
 
       {value >= 4 ? (
-        <StarIcon style={{ color }}></StarIcon>
+        <StarIcon fontSize='small' style={{ color: '#ffb400' }}></StarIcon>
       ) : value >= 3.5 ? (
-        <StarHalfIcon style={{ color }}></StarHalfIcon>
+        <StarHalfIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarHalfIcon>
       ) : (
-        <StarBorderIcon style={{ color }}></StarBorderIcon>
+        <StarBorderIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarBorderIcon>
       )}
 
       {value >= 5 ? (
-        <StarIcon style={{ color }}></StarIcon>
+        <StarIcon fontSize='small' style={{ color: '#ffb400' }}></StarIcon>
       ) : value >= 4.5 ? (
-        <StarHalfIcon style={{ color }}></StarHalfIcon>
+        <StarHalfIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarHalfIcon>
       ) : (
-        <StarBorderIcon style={{ color }}></StarBorderIcon>
+        <StarBorderIcon
+          fontSize='small'
+          style={{ color: '#ffb400' }}
+        ></StarBorderIcon>
       )}
 
       <Typography variant='body2' className={classes.TypoReview}>
