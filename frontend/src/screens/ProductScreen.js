@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Rating from '../components/Rating';
+import Rating from '@material-ui/lab/Rating';
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   bottomMidTypo1: {
     paddingBottom: theme.spacing(5),
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
+  },
+  Typo1: {
+    display: 'flex',
+    alignItems: 'center',
   },
   bottomMidTypo2: {
     paddingTop: theme.spacing(1),
@@ -110,12 +114,18 @@ const ProductScreen = ({ match }) => {
               >
                 {product.name}
               </Typography>
-              <Typography gutterBottom className={classes.bottomMidTypo2}>
+              <Typography
+                gutterBottom
+                className={`${classes.bottomMidTypo2} ${classes.Typo1}`}
+              >
                 <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
-                  color='#edbd00'
-                ></Rating>
+                  name='half-rating-read'
+                  defaultValue={product.rating}
+                  precision={0.5}
+                  readOnly
+                  size='small'
+                />
+                {product.numReviews} reviews
               </Typography>
               <Typography
                 variant='body1'

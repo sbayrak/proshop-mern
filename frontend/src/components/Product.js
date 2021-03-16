@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import Rating from './Rating';
 import {
   Card,
   CardActionArea,
@@ -10,6 +9,7 @@ import {
   Typography,
   Link,
 } from '@material-ui/core';
+import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   bottomCardAction: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  Typo1: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -49,19 +53,32 @@ const Product = ({ product }) => {
                 <Typography gutterBottom variant='h6' component='h3'>
                   {product.name}
                 </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  component='p'
+                  style={{ fontSize: '14px' }}
+                >
                   {product.description}
                 </Typography>
               </CardContent>
             </CardActionArea>
           </Link>
           <CardActions className={classes.bottomCardAction}>
-            <Typography variant='body2' gutterBottom paragraph>
+            <Typography
+              variant='subtitle2'
+              gutterBottom
+              paragraph
+              className={classes.Typo1}
+            >
               <Rating
-                value={product.rating}
-                color='#edbd00'
-                text={`${product.numReviews} reviews`}
-              ></Rating>
+                name='half-rating-read'
+                defaultValue={product.rating}
+                precision={0.5}
+                readOnly
+                size='small'
+              />
+              {product.numReviews} reviews
             </Typography>
             <Typography variant='h6'> ${product.price}</Typography>
           </CardActions>
