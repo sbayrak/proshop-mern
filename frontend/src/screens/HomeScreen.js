@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Product from '../components/Product';
-import axios from 'axios';
+import { listProducts } from '../actions/productActions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,18 +13,14 @@ const useStyles = makeStyles((theme) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await axios.get('/api/products');
-
-      setProducts(res.data);
-    };
-
-    fetchProducts();
+    dispatch(listProducts());
   }, []);
-
   return (
     <Fragment>
       <Container maxWidth='lg' className={classes.container}>
@@ -32,9 +29,15 @@ const HomeScreen = () => {
             <Typography variant='h3'>LATEST PRODUCTS</Typography>
           </Grid>
           <Grid container item xs={12}>
-            {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
-            ))}
+            {loading ? (
+              <Typography variant='h4'>loading....</Typography>
+            ) : error ? (
+              <Typography variant='h6'>{error}</Typography>
+            ) : (
+              products.map((product) => (
+                <Product key={product._id} product={product}></Product>
+              ))
+            )}
           </Grid>
         </Grid>
       </Container>
