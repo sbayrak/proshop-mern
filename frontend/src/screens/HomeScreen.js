@@ -1,8 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Grid, Typography } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Product from '../components/Product';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +28,7 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts());
   }, []);
+
   return (
     <Fragment>
       <Container maxWidth='lg' className={classes.container}>
@@ -30,9 +38,13 @@ const HomeScreen = () => {
           </Grid>
           <Grid container item xs={12}>
             {loading ? (
-              <Typography variant='h4'>loading....</Typography>
+              products.map((product) => (
+                <Grid item xs={12} sm={6} md={3}>
+                  <Loader></Loader>
+                </Grid>
+              ))
             ) : error ? (
-              <Typography variant='h6'>{error}</Typography>
+              <Message open={true} variant='error' message={error}></Message>
             ) : (
               products.map((product) => (
                 <Product key={product._id} product={product}></Product>
