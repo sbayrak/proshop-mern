@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import { Fragment } from 'react';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <main>
             <Route exact path='/' component={HomeScreen}></Route>
             <Route exact path='/product/:id' component={ProductScreen}></Route>
+            <Route exact path='/cart/:id?' component={CartScreen}></Route>
           </main>
           <Footer></Footer>
         </div>

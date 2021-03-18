@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Rating from '../components/Rating';
@@ -9,6 +9,11 @@ import {
   Typography,
   Paper,
   CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Menu,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { listProductDetails } from '../actions/productActions';
@@ -73,7 +78,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ history, match }) => {
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, product, error } = productDetails;
@@ -82,6 +88,10 @@ const ProductScreen = ({ match }) => {
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
   }, [dispatch, match]);
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <Fragment>
@@ -210,12 +220,42 @@ const ProductScreen = ({ match }) => {
                       </Typography>
                     </Grid>
                   </Grid>
+
+                  {product.countInStock > 0 && (
+                    <Grid container xs={12} className={classes.cartRow}>
+                      <Grid item xs={6}>
+                        <Typography variant='subtitle1' gutterBottom>
+                          Quantity :
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <FormControl variant='outlined'>
+                          <Select
+                            labelId='demo-simple-select-outlined-label'
+                            id='demo-simple-select-outlined'
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <MenuItem key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </MenuItem>
+                              )
+                            )}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  )}
+
                   <Button
                     variant='contained'
                     fullWidth
                     disableElevation
                     className={classes.cartBtn}
                     disabled={product.countInStock > 0 ? false : true}
+                    onClick={addToCartHandler}
                   >
                     ADD TO CART
                   </Button>
