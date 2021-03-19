@@ -194,11 +194,11 @@ const Header = () => {
                 <li>
                   <Typography variant='h6'>
                     <Link
-                      href='/'
+                      href='/cart'
                       className={classes.desktopMenuUlLink}
                       underline='none'
                     >
-                      Home
+                      Cart
                     </Link>
                   </Typography>
                 </li>
