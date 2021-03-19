@@ -73,6 +73,28 @@ const useStyles = makeStyles((theme) => ({
   },
   cartBtn: {
     marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.grey[800],
+    color: '#f9c11c',
+    transition: '0.8s ease',
+    '&:hover': {
+      backgroundColor: theme.palette.grey[900],
+      color: '#fff',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
+    },
+  },
+  goBackBtn: {
+    backgroundColor: theme.palette.grey[800],
+    color: '#f9c11c',
+    transition: '0.8s ease',
+    '&:hover': {
+      backgroundColor: theme.palette.grey[900],
+      color: '#fff',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
+    },
   },
 }));
 
@@ -103,7 +125,11 @@ const ProductScreen = ({ history, match }) => {
             className={classes.topSubGrid}
           >
             <Link to='/' style={{ textDecoration: 'none' }}>
-              <Button variant='contained' disableElevation>
+              <Button
+                variant='contained'
+                disableElevation
+                className={classes.goBackBtn}
+              >
                 Go Back
               </Button>
             </Link>
