@@ -19,12 +19,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   cartContainer: {
-    border: '1px solid red',
+    border: '1px solid white',
     minHeight: '100vh',
     backgroundColor: '#fff',
+    marginTop: 20,
   },
   rootContainer: {
-    border: '1px solid blue',
     marginTop: theme.spacing(10),
     [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(2),
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   itemsContainer: {
-    border: '1px solid cyan',
     padding: theme.spacing(2),
     paddingLeft: theme.spacing(3),
     [theme.breakpoints.down('sm')]: {
@@ -75,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   gridLeftContainer: {
-    border: '1px solid red',
     padding: theme.spacing(2),
   },
   paper: {

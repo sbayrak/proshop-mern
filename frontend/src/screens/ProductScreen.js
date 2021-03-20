@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { listProductDetails } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 import Message from '../components/Message';
 
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +111,9 @@ const ProductScreen = ({ history, match }) => {
   }, [dispatch, match]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    // history.push(`/cart/${match.params.id}?qty=${qty}`);
+    dispatch(addToCart(product._id, qty));
+    history.push('/cart');
   };
 
   return (
