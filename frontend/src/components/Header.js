@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../actions/userActions';
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -10,6 +12,7 @@ import {
   CssBaseline,
   Menu,
   MenuItem,
+  Button,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -106,6 +109,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Header = () => {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const styles = {
     mobileMenuLink: {
       display: 'flex',
@@ -122,6 +128,10 @@ const Header = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logoutHandler = (e) => {
+    dispatch(logout());
   };
 
   const mobileMenu = (
@@ -202,17 +212,42 @@ const Header = () => {
                     </Link>
                   </Typography>
                 </li>
-                <li>
-                  <Typography variant='h6'>
-                    <Link
-                      href='/login'
-                      className={classes.desktopMenuUlLink}
-                      underline='none'
-                    >
-                      Sign In
-                    </Link>
-                  </Typography>
-                </li>
+                {userInfo ? (
+                  <Fragment>
+                    <li>
+                      <Typography variant='h6'>
+                        <Link
+                          href='/profile'
+                          className={classes.desktopMenuUlLink}
+                          underline='none'
+                        >
+                          {userInfo.name}
+                        </Link>
+                      </Typography>
+                    </li>
+                    <li>
+                      <Button
+                        onClick={logoutHandler}
+                        className={classes.desktopMenuUlLink}
+                        underline='none'
+                      >
+                        Logout
+                      </Button>
+                    </li>
+                  </Fragment>
+                ) : (
+                  <li>
+                    <Typography variant='h6'>
+                      <Link
+                        href='/login'
+                        className={classes.desktopMenuUlLink}
+                        underline='none'
+                      >
+                        Sign In
+                      </Link>
+                    </Typography>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
