@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import {
   Container,
   Grid,
@@ -83,6 +83,8 @@ const ProfileScreen = ({ location, history }) => {
   const { loading, error, user } = userDetails;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   useEffect(() => {
     if (!userInfo) {
@@ -102,7 +104,7 @@ const ProfileScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
-      // dispatch(updateProfile)
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
@@ -133,6 +135,13 @@ const ProfileScreen = ({ location, history }) => {
                       open={true}
                       variant='error'
                       message={message}
+                    ></Message>
+                  )}
+                  {success && (
+                    <Message
+                      open={true}
+                      variant='success'
+                      message={'Profile updated'}
                     ></Message>
                   )}
                 </Grid>
