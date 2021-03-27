@@ -5,22 +5,13 @@ import {
   Grid,
   Typography,
   Button,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
 } from '@material-ui/core';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { savePaymentMethod } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#212121',
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
