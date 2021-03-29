@@ -7,18 +7,33 @@ import { makeStyles } from '@material-ui/core/styles';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
 const useStyles = makeStyles((theme) => ({
+  rootContainer: {
+    minHeight: '100vh',
+  },
+  gridContainer: {
+    marginTop: 100,
+    padding: 10,
+  },
   itemsContainer: {
     padding: theme.spacing(2),
     paddingLeft: theme.spacing(3),
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(1),
-      paddingLeft: theme.spacing(2),
-    },
+  },
+  gridItem: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    borderBottom: `1px solid ${theme.palette.grey[400]}`,
+  },
+  leftTypo1: {
+    paddingBottom: theme.spacing(1),
+    color: theme.palette.grey[700],
+  },
+  leftTypo2: {
+    paddingBottom: theme.spacing(1),
+    color: theme.palette.grey[700],
   },
   cartItems: {
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
-    borderBottom: `1px solid ${theme.palette.grey[400]}`,
   },
   cartImg: {
     width: 75,
@@ -33,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
   },
+  checkBtn: {
+    color: '#f9c11c',
+    backgroundColor: theme.palette.grey[800],
+    '&:hover': {
+      backgroundColor: theme.palette.grey[700],
+    },
+  },
 }));
 const PlaceOrderScreen = () => {
   const classes = useStyles();
@@ -44,24 +66,32 @@ const PlaceOrderScreen = () => {
 
   return (
     <Fragment>
-      <Container maxWidth='lg'>
-        <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-        <Grid container>
+      <Container maxWidth='lg' className={classes.rootContainer}>
+        <Grid container className={classes.gridContainer}>
+          <Grid item xs={12}>
+            <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
+          </Grid>
           <Grid item md={8}>
-            <Grid item>
-              <Typography variant='h4'>Shipping</Typography>
+            <Grid item className={classes.gridItem}>
+              <Typography variant='h4' className={classes.leftTypo1}>
+                Shipping
+              </Typography>
               <Typography variant='body2'>
-                {cart.shippingAddress.address} , {cart.shippingAddress.city} ,{' '}
+                {cart.shippingAddress.address} , {cart.shippingAddress.city} ,
                 {cart.shippingAddress.postalCode} ,
                 {cart.shippingAddress.country}
               </Typography>
             </Grid>
-            <Grid item>
-              <Typography variant='h4'>Payment Method</Typography>
+            <Grid item className={classes.gridItem}>
+              <Typography variant='h4' className={classes.leftTypo1}>
+                Payment Method
+              </Typography>
               <Typography variant='body2'>{cart.paymentMethod}</Typography>
             </Grid>
-            <Grid item>
-              <Typography variant='h4'>Order Items</Typography>
+            <Grid item className={classes.gridItem}>
+              <Typography variant='h4' className={classes.leftTypo1}>
+                Order Items
+              </Typography>
               <Typography variant='body2'>
                 {cart.cartItems.length === 0 ? (
                   <Message
@@ -117,43 +147,89 @@ const PlaceOrderScreen = () => {
             <Paper className={classes.paper} elevation={3}>
               <Grid container xs={12}>
                 <Grid item xs={12}>
-                  <Typography variant='h4'>Order Summary</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='body1'
-                    gutterBottom
-                    className={classes.leftTypo2}
-                  >
-                    Items : ${cart.itemsPrice}
+                  <Typography variant='h4' gutterBottom>
+                    Order Summary
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='body1'
-                    gutterBottom
-                    className={classes.leftTypo2}
-                  >
-                    Shipping : ${cart.shippingPrice}
-                  </Typography>
+                <Grid container item xs={12}>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      Items
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      ${cart.itemsPrice}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='body1'
-                    gutterBottom
-                    className={classes.leftTypo2}
-                  >
-                    Tax : ${cart.taxPrice}
-                  </Typography>
+                <Grid container item xs={12}>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      Shipping
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      ${cart.shippingPrice}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    variant='body1'
-                    gutterBottom
-                    className={classes.leftTypo2}
-                  >
-                    Total : ${cart.totalPrice}
-                  </Typography>
+                <Grid container item xs={12}>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      Tax
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      ${cart.taxPrice}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      Total
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6}>
+                    <Typography
+                      variant='body1'
+                      gutterBottom
+                      className={classes.leftTypo2}
+                    >
+                      ${cart.totalPrice}
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Button
