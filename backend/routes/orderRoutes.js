@@ -1,4 +1,4 @@
-import { protect } from '../middleware/authMiddleware.js';
+import protect from '../middleware/authMiddleware.js';
 import { addOrderItems } from '../controllers/orderController.js';
 import express from 'express';
 const router = express.Router();
