@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import { useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Fragment } from 'react';
+import axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -12,7 +14,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Message from '../components/Message';
-import { getOrderDetails } from '../actions/orderActions';
+import { getOrderDetails, payOrder } from '../actions/orderActions';
+import { ORDER_PAY_RESET } from '../constants/orderContants';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -65,24 +68,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const OrderScreen = ({ match }) => {
+  const [sdkReady, setSdkReady] = useState(false);
   const orderId = match.params.id;
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
-  };
-  order.itemsPrice = addDecimals(
-    order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );
+  const orderPay = useSelector((state) => state.orderPay);
+  const { loading: loadingPay, success: successPay } = orderPay;
+  if (!loading) {
+    //   Calculate prices
+    const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2);
+    };
+
+    order.itemsPrice = addDecimals(
+      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
+  }
   useEffect(() => {
+    const addPaypalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal');
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+
+    if (!order || successPay) {
+      dispatch(getOrderDetails(orderId));
+      dispatch({ type: ORDER_PAY_RESET });
+    } else if (!order.isPaid) {
+      if (!window.paypal) {
+        addPaypalScript();
+      } else {
+        setSdkReady(true);
+      }
+    }
+
     if (!order || order._id !== orderId) {
       dispatch(getOrderDetails(orderId));
     }
     // eslint-disable-next-line
   }, [order, orderId]);
+
+  const successPaymentHandler = (paymentResult) => {
+    console.log('hi');
+    dispatch(payOrder(order, paymentResult));
+  };
 
   return (
     <Fragment>
@@ -287,15 +325,19 @@ const OrderScreen = ({ match }) => {
                     </Grid>
                   )}
                   <Grid item xs={12}>
-                    <Button
-                      variant='contained'
-                      disableElevation
-                      fullWidth
-                      className={classes.checkBtn}
-                      disabled={!order.orderItems}
-                    >
-                      PLACE ORDER
-                    </Button>
+                    {!order.isPaid && (
+                      <Grid item xs={12}>
+                        {loadingPay && <CircularProgress></CircularProgress>}
+                        {!sdkReady ? (
+                          <CircularProgress></CircularProgress>
+                        ) : (
+                          <PayPalButton
+                            amount={order.totalPrice}
+                            onSuccess={successPaymentHandler}
+                          ></PayPalButton>
+                        )}
+                      </Grid>
+                    )}
                   </Grid>
                 </Grid>
               </Paper>
