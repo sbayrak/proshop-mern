@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import CloseIcon from '@material-ui/icons/Close';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import {
@@ -12,6 +13,13 @@ import {
   TextField,
   Button,
   CircularProgress,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -42,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
   gridItem: {
     paddingBottom: 20,
+  },
+  table: {
+    minWidth: 650,
   },
 
   lockBtn: {
@@ -226,85 +237,60 @@ const ProfileScreen = ({ location, history }) => {
               >
                 <Typography variant='h4'>Orders</Typography>
 
-                {error && (
-                  <Message
-                    open={true}
-                    variant='error'
-                    message={error}
-                  ></Message>
-                )}
-                {message && (
-                  <Message
-                    open={true}
-                    variant='error'
-                    message={message}
-                  ></Message>
+                {loadingOrders ? (
+                  <CircularProgress></CircularProgress>
+                ) : errorOrders ? (
+                  <Message variant='danger' message={errorOrders}></Message>
+                ) : (
+                  <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label='simple table'>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell align='right'>DATE</TableCell>
+                          <TableCell align='right'>TOTAL</TableCell>
+                          <TableCell align='right'>PAID</TableCell>
+                          <TableCell align='right'>DELIVERED</TableCell>
+                          <TableCell align='right'></TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {orders.map((order) => (
+                          <TableRow key={order._id}>
+                            <TableCell component='th'>{order._id}</TableCell>
+                            <TableCell align='right'>
+                              {order.createdAt.substring(0, 10)}
+                            </TableCell>
+                            <TableCell align='right'>
+                              {order.totalPrice}
+                            </TableCell>
+                            <TableCell align='right'>
+                              {order.isPaid ? (
+                                order.paidAt.substring(0, 10)
+                              ) : (
+                                <CloseIcon style={{ color: 'red' }}></CloseIcon>
+                              )}
+                            </TableCell>
+                            <TableCell align='right'>
+                              {order.isDelivered ? (
+                                order.deliveredAt.substring(0, 10)
+                              ) : (
+                                <CloseIcon style={{ color: 'red' }}></CloseIcon>
+                              )}
+                            </TableCell>
+
+                            <TableCell align='right'>
+                              <Link to={`/order/${order._id}`}>
+                                <Button>Details</Button>
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 )}
               </Grid>
-              {loading ? (
-                <CircularProgress></CircularProgress>
-              ) : (
-                <Fragment>
-                  <Grid item xs={12} className={classes.gridItem}>
-                    <TextField
-                      error={Boolean(error)}
-                      label='Name'
-                      // helperText='error message'
-                      variant='outlined'
-                      fullWidth
-                      color='primary'
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} className={classes.gridItem}>
-                    <TextField
-                      error={Boolean(error)}
-                      label='E-Mail'
-                      // helperText='error message'
-                      variant='outlined'
-                      fullWidth
-                      color='primary'
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} className={classes.gridItem}>
-                    <TextField
-                      error={Boolean(error)}
-                      label='Password'
-                      // helperText='error message'
-                      variant='outlined'
-                      fullWidth
-                      type='password'
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} className={classes.gridItem}>
-                    <TextField
-                      error={Boolean(error)}
-                      label='Confirm Password'
-                      // helperText='error message'
-                      variant='outlined'
-                      fullWidth
-                      type='password'
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} className={classes.gridItem}>
-                    <Button
-                      variant='contained'
-                      className={classes.SignInBtn}
-                      fullWidth
-                      type='submit'
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                </Fragment>
-              )}
             </Grid>
           </Grid>
         </Container>
