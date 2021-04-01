@@ -234,6 +234,45 @@ const Header = () => {
                         Logout
                       </Button>
                     </li>
+                    {userInfo.isAdmin && (
+                      <Fragment>
+                        <li>
+                          <Typography variant='h6'>
+                            <Link
+                              href='/admin/userlist'
+                              className={classes.desktopMenuUlLink}
+                              underline='none'
+                            >
+                              UserList
+                            </Link>
+                          </Typography>
+                        </li>
+
+                        <li>
+                          <Typography variant='h6'>
+                            <Link
+                              href='/admin/productlist'
+                              className={classes.desktopMenuUlLink}
+                              underline='none'
+                            >
+                              Products
+                            </Link>
+                          </Typography>
+                        </li>
+
+                        <li>
+                          <Typography variant='h6'>
+                            <Link
+                              href='/admin/orderlist'
+                              className={classes.desktopMenuUlLink}
+                              underline='none'
+                            >
+                              Orders
+                            </Link>
+                          </Typography>
+                        </li>
+                      </Fragment>
+                    )}
                   </Fragment>
                 ) : (
                   <li>
