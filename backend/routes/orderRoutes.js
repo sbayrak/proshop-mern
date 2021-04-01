@@ -1,4 +1,4 @@
-import protect from '../middleware/authMiddleware.js';
+import { protect } from '../middleware/authMiddleware.js';
 import {
   addOrderItems,
   getOrderById,
