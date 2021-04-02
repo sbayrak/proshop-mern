@@ -55,7 +55,7 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, successDelete]);
+  }, [dispatch, history, successDelete, userInfo]);
 
   const deleteHandler = (userId) => {
     dispatch(deleteUser(userId));
@@ -98,7 +98,7 @@ const UserListScreen = ({ history }) => {
                         </TableCell>
 
                         <TableCell align='right'>
-                          <Link to={`/user/${user._id}/edit`}>
+                          <Link to={`/admin/user/${user._id}/edit`}>
                             <IconButton>
                               <EditIcon></EditIcon>
                             </IconButton>
