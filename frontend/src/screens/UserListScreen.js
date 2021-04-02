@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listUsers } from '../actions/userActions';
+import { listUsers, deleteUser } from '../actions/userActions';
 import {
   Container,
   Grid,
@@ -46,6 +46,8 @@ const UserListScreen = ({ history }) => {
   const { loading, error, users } = userList;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -53,10 +55,10 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history]);
+  }, [dispatch, history, successDelete]);
 
   const deleteHandler = (userId) => {
-    console.log('delete');
+    dispatch(deleteUser(userId));
   };
   return (
     <Fragment>
