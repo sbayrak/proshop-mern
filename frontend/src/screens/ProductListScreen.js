@@ -1,6 +1,11 @@
 import React, { useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts, deleteProduct } from '../actions/productActions';
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from '../actions/productActions';
+import { PRODUCT_CREATE_RESET } from '../constants/productContants';
 import {
   Container,
   Grid,
@@ -47,6 +52,7 @@ const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.productList);
   const { loading, error, products } = productsList;
+
   const productDelete = useSelector((state) => state.productDelete);
   const {
     loading: loadingDelete,
@@ -54,23 +60,44 @@ const ProductListScreen = ({ history }) => {
     success: successDelete,
   } = productDelete;
 
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts());
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+
+    if (!userInfo.isAdmin) {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, successDelete]);
+
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
 
   const deleteHandler = (id) => {
     dispatch(deleteProduct(id));
   };
 
   const createProductHandler = () => {
-    console.log('Hi');
+    dispatch(createProduct());
   };
   return (
     <Fragment>
@@ -86,6 +113,10 @@ const ProductListScreen = ({ history }) => {
             {loadingDelete && <CircularProgress></CircularProgress>}
             {errorDelete && (
               <Message variant='error' message={errorDelete}></Message>
+            )}
+            {loadingCreate && <CircularProgress></CircularProgress>}
+            {errorCreate && (
+              <Message variant='error' message={errorCreate}></Message>
             )}
             {loading ? (
               <CircularProgress></CircularProgress>
