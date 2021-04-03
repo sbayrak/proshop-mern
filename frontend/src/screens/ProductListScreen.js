@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import { listProducts, deleteProduct } from '../actions/productActions';
 import {
   Container,
   Grid,
@@ -47,6 +47,12 @@ const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.productList);
   const { loading, error, products } = productsList;
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -57,10 +63,10 @@ const ProductListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successDelete]);
 
-  const deleteHandler = (userId) => {
-    // delete products
+  const deleteHandler = (id) => {
+    dispatch(deleteProduct(id));
   };
 
   const createProductHandler = () => {
@@ -77,6 +83,10 @@ const ProductListScreen = ({ history }) => {
             <Typography gutterBottom></Typography>
           </Grid>
           <Grid item md={12}>
+            {loadingDelete && <CircularProgress></CircularProgress>}
+            {errorDelete && (
+              <Message variant='error' message={errorDelete}></Message>
+            )}
             {loading ? (
               <CircularProgress></CircularProgress>
             ) : error ? (
