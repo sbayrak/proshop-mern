@@ -48,7 +48,7 @@ export const productDetailsReducer = (
     case PRODUCT_DETAILS_REQUEST:
       return {
         loading: true,
-        product: {},
+        ...state,
       };
     case PRODUCT_DETAILS_SUCCESS:
       return {
@@ -89,6 +89,32 @@ export const productDeleteReducer = (state = {}, action) => {
 };
 
 export const productCreateReducer = (state = {}, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case PRODUCT_CREATE_REQUEST:
+      return {
+        loading: true,
+      };
+    case PRODUCT_CREATE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        product: payload,
+      };
+    case PRODUCT_CREATE_FAIL:
+      return {
+        loading: false,
+        error: payload,
+      };
+    case PRODUCT_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const productUpdateReducer = (state = { product: {} }, action) => {
   const { type, payload } = action;
 
   switch (type) {
