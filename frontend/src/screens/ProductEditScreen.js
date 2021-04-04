@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
+import axios from 'axios';
 import { listProductDetails, updateProduct } from '../actions/productActions';
 import {
   Container,
@@ -10,6 +11,7 @@ import {
   Button,
   IconButton,
   CircularProgress,
+  Typography,
 } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {
@@ -69,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#212121',
     borderBottom: '2px solid #f9c11c',
   },
+  input: {
+    display: 'none',
+  },
 }));
 
 const ProductEditScreen = ({ match, history }) => {
@@ -81,6 +86,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
@@ -111,6 +117,28 @@ const ProductEditScreen = ({ match, history }) => {
       }
     }
   }, [dispatch, history, product, productId, successUpdate]);
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/api/uploads/', formData, config);
+
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -187,16 +215,27 @@ const ProductEditScreen = ({ match, history }) => {
                   </Grid>
 
                   <Grid item xs={12} className={classes.gridItem}>
-                    <TextField
-                      error={Boolean(error)}
-                      label='Image'
-                      // helperText='error message'
-                      variant='outlined'
-                      fullWidth
-                      color='primary'
-                      value={image}
-                      onChange={(e) => setImage(e.target.value)}
+                    <Typography variant='body1' gutterBottom>
+                      Image
+                    </Typography>
+                    <input
+                      accept='image/*'
+                      className={classes.input}
+                      id='contained-button-file'
+                      multiple
+                      type='file'
+                      onChange={uploadFileHandler}
                     />
+                    <label htmlFor='contained-button-file'>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        component='span'
+                      >
+                        Upload
+                      </Button>
+                    </label>
+                    {uploading && <CircularProgress></CircularProgress>}
                   </Grid>
                   <Grid item xs={12} className={classes.gridItem}>
                     <TextField
