@@ -8,14 +8,21 @@ import {
   Container,
   Grid,
   Typography,
-  Button,
   Paper,
   CircularProgress,
+  Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Message from '../components/Message';
-import { getOrderDetails, payOrder } from '../actions/orderActions';
-import { ORDER_PAY_RESET } from '../constants/orderContants';
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions';
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../constants/orderContants';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -77,6 +84,12 @@ const OrderScreen = ({ match }) => {
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   if (!loading) {
     //   Calculate prices
     const addDecimals = (num) => {
@@ -100,9 +113,10 @@ const OrderScreen = ({ match }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay) {
-      dispatch(getOrderDetails(orderId));
+    if (!order || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
         addPaypalScript();
@@ -115,11 +129,15 @@ const OrderScreen = ({ match }) => {
       dispatch(getOrderDetails(orderId));
     }
     // eslint-disable-next-line
-  }, [order, orderId]);
+  }, [order, orderId, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
     console.log('hi');
     dispatch(payOrder(order, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
   };
 
   return (
@@ -336,6 +354,14 @@ const OrderScreen = ({ match }) => {
                             onSuccess={successPaymentHandler}
                           ></PayPalButton>
                         )}
+                      </Grid>
+                    )}
+                    {loadingDeliver && <CircularProgress></CircularProgress>}
+                    {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                      <Grid item xs={12}>
+                        <Button variant='contained' onClick={deliverHandler}>
+                          Mark as Delivered
+                        </Button>
                       </Grid>
                     )}
                   </Grid>
