@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Link, Button } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField, Button } from '@material-ui/core';
 
 const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState('');
-  const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
 
   const submitHandler = (e) => {
     e.preventDefault();
