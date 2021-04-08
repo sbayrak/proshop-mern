@@ -18,6 +18,7 @@ import UserEditScreen from './screens/UserEditScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
+import SearchBox from './components/SearchBox';
 
 const App = () => {
   return (
@@ -64,7 +65,8 @@ const App = () => {
               path='/admin/product/:id/edit'
               component={ProductEditScreen}
             ></Route>
-            <Route exact path='/' component={HomeScreen}></Route>
+            <Route path='/search/:keyword' component={HomeScreen} exact></Route>
+            <Route path='/' component={HomeScreen} exact></Route>
           </main>
           <Footer></Footer>
         </div>

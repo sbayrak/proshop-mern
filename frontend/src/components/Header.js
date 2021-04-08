@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
+import { Route } from 'react-router-dom';
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -18,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import '../App.css';
+import SearchBox from './SearchBox';
 
 const theme = createMuiTheme({});
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#e3e3e3',
     textDecoration: 'none',
     display: 'inline',
+    marginRight: theme.spacing(4),
     paddingLeft: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
       display: 'none',
@@ -182,6 +185,11 @@ const Header = () => {
                 ProShop
               </a>
             </Typography>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
           </div>
 
           <div className={classes.right}>
