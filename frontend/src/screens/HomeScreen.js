@@ -6,6 +6,7 @@ import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
+import Paginate from '../components/Paginate';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,15 +16,16 @@ const useStyles = makeStyles((theme) => ({
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   useEffect(() => {
-    dispatch(listProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <Fragment>
@@ -42,11 +44,18 @@ const HomeScreen = ({ match }) => {
             ) : error ? (
               <Message open={true} variant='error' message={error}></Message>
             ) : (
-              products.map((product) => (
-                <Product key={product._id} product={product}></Product>
-              ))
+              <Fragment>
+                {products.map((product) => (
+                  <Product key={product._id} product={product}></Product>
+                ))}
+              </Fragment>
             )}
-          </Grid>
+          </Grid>{' '}
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          ></Paginate>
         </Grid>
       </Container>
     </Fragment>
