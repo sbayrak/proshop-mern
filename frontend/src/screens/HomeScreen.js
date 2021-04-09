@@ -7,6 +7,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
 import Paginate from '../components/Paginate';
+import ProductCarousel from '../components/ProductCarousel';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,6 +32,7 @@ const HomeScreen = ({ match }) => {
     <Fragment>
       <Container maxWidth='lg' className={classes.container}>
         <Grid container>
+          {!keyword && <ProductCarousel></ProductCarousel>}
           <Grid container item xs={12} justify='flex-start'>
             <Typography variant='h3'>LATEST PRODUCTS</Typography>
           </Grid>
