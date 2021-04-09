@@ -25,6 +25,7 @@ import {
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productContants';
 import { addToCart } from '../actions/cartActions';
 import Message from '../components/Message';
+import Meta from '../components/Meta';
 
 const useStyles = makeStyles((theme) => ({
   productContainer: {
@@ -211,6 +212,7 @@ const ProductScreen = ({ history, match }) => {
             <Message variant='error' message={error}></Message>
           ) : (
             <Fragment>
+              <Meta title={product.name}></Meta>
               <Grid container className={classes.bottomGridContainer}>
                 <Grid item md={6}>
                   <img

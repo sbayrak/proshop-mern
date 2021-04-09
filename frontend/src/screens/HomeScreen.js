@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography, Link } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
 import Product from '../components/Product';
 import Message from '../components/Message';
@@ -30,9 +31,18 @@ const HomeScreen = ({ match }) => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>Welcome to SBShop | Home</title>
+        <meta name='description' content='we sell best products SBShop'></meta>
+        <meta name='keywords' content='sbshop, iphone,cannon, sb shop'></meta>
+      </Helmet>
       <Container maxWidth='lg' className={classes.container}>
         <Grid container>
-          {!keyword && <ProductCarousel></ProductCarousel>}
+          {!keyword ? (
+            <ProductCarousel></ProductCarousel>
+          ) : (
+            <Link to='/'>Go Back</Link>
+          )}
           <Grid container item xs={12} justify='flex-start'>
             <Typography variant='h3'>LATEST PRODUCTS</Typography>
           </Grid>
