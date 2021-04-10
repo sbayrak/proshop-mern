@@ -20,6 +20,37 @@ To start both back and front end servers run;
 
 `npm run dev`
 
+## Tech Stack Used
+
+### Frontend
+react
+material-ui/core
+material-ui/icons
+material-ui/lab
+react-helmet
+react-paypal-button-v2
+react-redux
+react-router-dom 
+redux
+redux-devtools-extension
+redux-thunk
+
+### Backend
+node
+express
+nodemon
+jsonwebtoken
+bcryptjs
+concurrently
+dotenv
+express-async-handler
+mongoose
+morgan
+multer
+
+
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
