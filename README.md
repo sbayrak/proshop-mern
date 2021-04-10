@@ -21,32 +21,33 @@ To start both back and front end servers run;
 `npm run dev`
 
 ## Tech Stack Used
+Generally ReactJS, NodeJS, MongoDB and Express used for this website. Please check out dependencies also.
 
 ### Frontend
-react
-material-ui/core
-material-ui/icons
-material-ui/lab
-react-helmet
-react-paypal-button-v2
-react-redux
-react-router-dom 
-redux
-redux-devtools-extension
-redux-thunk
+react,
+material-ui/core,
+material-ui/icons,
+material-ui/lab,
+react-helmet,
+react-paypal-button-v2,
+react-redux,
+react-router-dom ,
+redux,
+redux-devtools-extension,
+redux-thunk,
 
 ### Backend
-node
-express
-nodemon
-jsonwebtoken
-bcryptjs
-concurrently
-dotenv
-express-async-handler
-mongoose
-morgan
-multer
+node,
+express,
+nodemon,
+jsonwebtoken,
+bcryptjs,
+concurrently,
+dotenv,
+express-async-handler,
+mongoose, 
+morgan,
+multer 
 
 
 
