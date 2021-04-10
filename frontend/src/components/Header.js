@@ -177,12 +177,12 @@ const Header = () => {
           <div className={classes.left}>
             <IconButton edge='end' size='medium'>
               <Avatar alt='suatbayrak' className={classes.leftBtn}>
-                PS
+                SB
               </Avatar>
             </IconButton>
             <Typography variant='h6' className={classes.leftTypo}>
               <a href='/' rel='noreferrer' className={classes.leftTypo}>
-                ProShop
+                SBShop
               </a>
             </Typography>
             <Route
